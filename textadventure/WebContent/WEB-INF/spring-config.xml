@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    http://www.springframework.org/schema/data/mongo
+    http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+    http://www.directwebremoting.org/schema/spring-dwr
+    http://www.directwebremoting.org/schema/spring-dwr-3.0.xsd">
+
+	<description>Hi</description>
+
+	<context:annotation-config />
+	<context:component-scan base-package="itech" />
+
+	<bean id="oracleDataSource"
+		class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName"
+			value="java:comp/env/jdbc/textadventure" />
+		<property name="lookupOnStartup" value="false" />
+		<property name="cache" value="true" />
+		<property name="proxyInterface" value="javax.sql.DataSource" />
+	</bean>
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="oracleDataSource" />
+		<property name="persistenceUnitName" value="textadventurePU" />
+		<property name="packagesToScan" value="itech.general.entities" />
+		<property name="jpaVendorAdapter">
+			<bean
+				class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="generateDdl" value="false" />
+				<property name="showSql" value="false" />
+				<property name="database">
+					<util:constant
+						static-field="org.springframework.orm.jpa.vendor.Database.MYSQL" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory"
+			ref="entityManagerFactory" />
+	</bean>
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
+</beans>
