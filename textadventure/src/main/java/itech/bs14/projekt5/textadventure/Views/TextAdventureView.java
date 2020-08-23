@@ -18,4 +18,5 @@ import org.springframework.stereotype.Component;
 @Component("TextAdventureView")
 @Scope("session")
 public class TextAdventureView {
+	
 }

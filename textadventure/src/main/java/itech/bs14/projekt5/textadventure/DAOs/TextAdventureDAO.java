@@ -20,6 +20,5 @@ public class TextAdventureDAO {
 	@SuppressWarnings("unchecked")
 	public void listIncome() {
 		Query query = entityManager.createQuery("SELECT m FROM Income m");
-
 	}
 }

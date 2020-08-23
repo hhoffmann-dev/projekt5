@@ -2,10 +2,14 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
     <persistence-unit name="textadventurePU" transaction-type="RESOURCE_LOCAL">
         <jta-data-source>jdbc/textadventure</jta-data-source>
-        <class>itech.general.entities.Income</class>
+        <class>itech.bs14.projekt5.textadventure.Entities.Armour</class>
+        <class>itech.bs14.projekt5.textadventure.Entities.Character</class>
+        <class>itech.bs14.projekt5.textadventure.Entities.Weapon</class>
+        <class>itech.bs14.projekt5.textadventure.Entities.Dialog</class>
+        <class>itech.bs14.projekt5.textadventure.Entities.Environment</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
-            <!-- <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" /> -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
        		<!-- <property name="hibernate.connection.datasource" value="java:comp/env/jdbc/housekeepingLogin"/> -->
             <!-- <property name="hibernate.show_sql" value="true" />
             <property name="hibernate.format_sql" value="true" />

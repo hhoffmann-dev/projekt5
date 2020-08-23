@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import itech.bs14.projekt5.textadventure.DAOs.TextAdventureDAO;
-import itech.general.entities.Income;
 
 
 @Component("TextAdventureBean")
@@ -18,12 +17,10 @@ public class TextAdventureBean {
 	@Autowired
 	TextAdventureDAO taDAO;
 	
-	List<Income> lst;
 	
 	@PostConstruct
 	public void init() {
 		
 		taDAO.listIncome();
 	}
-
 }
