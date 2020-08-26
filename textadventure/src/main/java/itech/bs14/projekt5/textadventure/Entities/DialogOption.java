@@ -10,41 +10,42 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "`environment`")
-public class Environment {
-	
+@Table(name = "`dialogoption`")
+public class DialogOption {
+
 			@Id
 			@Column(name = "Id")
 			private int Id;
 
-			@Column(name = "EnvironmentName")
-			private String environmentName;
+			@Column(name = "Text")
+			private String dialogText;
 
-			@ManyToMany(mappedBy = "environments")
+			@ManyToMany(mappedBy = "dialogoptions")
 			private List<Dialog> dialogs = new ArrayList<Dialog>();
 
 			public int getId() {
 				return Id;
 			}
 
-			public void setIdEnvironment(int i) {
+			public void setIdDialogOption(int i) {
 				Id = i;
 			}
 
-			public String getEnvironmentName() {
-				return environmentName;
+			public String getDialogText() {
+				return dialogText;
 			}
 
-			public void setEnvironmentName(String environmentName) {
-				this.environmentName = environmentName;
+			public void setDialogText(String dialogText) {
+				this.dialogText = dialogText;
 			}
 
-			public List<Dialog> getDialogs() {
+			public List<Dialog> getDialog() {
 				return dialogs;
 			}
 
-			public void setDialogs(List<Dialog> dialogs) {
-				this.dialogs = dialogs;
+			public void setDialog(List<Dialog> dialog) {
+				this.dialogs = dialog;
 			}
+			
 
 }

@@ -13,12 +13,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Character")
+@Table(name = "`character`")
 public class Character {
 	
 	@Id
-	@Column(name = "idCharacter")
-	private int idCharacter;
+	@Column(name = "Id")
+	private int Id;
 
 	@Column(name = "CharacterName")
 	private String characterName;
@@ -28,34 +28,34 @@ public class Character {
 	
 	  @ManyToMany(cascade = { CascadeType.ALL })
 	    @JoinTable(
-	        name = "CharacterHasArmour", 
-	        joinColumns = { @JoinColumn(name = "idArmour") }, 
-	        inverseJoinColumns = { @JoinColumn(name = "idCharacter") }
+	        name = "characterhasarmour", 
+	        joinColumns = { @JoinColumn(name = "character_id") }, 
+	        inverseJoinColumns = { @JoinColumn(name = "armour_id") }
 	    )
 	private List<Armour> armours = new ArrayList<Armour>();
 	
 	  @ManyToMany(cascade = { CascadeType.ALL })
 	    @JoinTable(
-	        name = "CharacterHasWeapon", 
-	        joinColumns = { @JoinColumn(name = "idWeapon") }, 
-	        inverseJoinColumns = { @JoinColumn(name = "idCharacter") }
+	        name = "characterhasweapon", 
+	        joinColumns = { @JoinColumn(name = "character_id") }, 
+	        inverseJoinColumns = { @JoinColumn(name = "weapon_id") }
 	    )
-	  private List<Character> weapons = new ArrayList<Character>();
+	  private List<Weapon> weapons = new ArrayList<Weapon>();
 	  
 	  @ManyToMany(cascade = { CascadeType.ALL })
 	    @JoinTable(
-	        name = "CharacterHasDialog", 
-	        joinColumns = { @JoinColumn(name = "idDialog") }, 
-	        inverseJoinColumns = { @JoinColumn(name = "idCharacter") }
+	        name = "characterhasdialog", 
+	        joinColumns = { @JoinColumn(name = "character_id") }, 
+	        inverseJoinColumns = { @JoinColumn(name = "dialog_id") }
 	    )
-	  private List<Dialog> dialogTexts = new ArrayList<Dialog>();
+	  private List<Dialog> dialogs = new ArrayList<Dialog>();
 	
-	public int getIdCharacter() {
-		return idCharacter;
+	public int getId() {
+		return Id;
 	}
 
-	public void setIdCharacter(int idCharacter) {
-		this.idCharacter = idCharacter;
+	public void setIdCharacter(int i) {
+		Id = i;
 	}
 
 	public String getCharacterName() {
@@ -80,6 +80,22 @@ public class Character {
 
 	public void setArmours(List<Armour> armours) {
 		this.armours = armours;
+	}
+
+	public List<Weapon> getWeapons() {
+		return weapons;
+	}
+
+	public void setWeapons(List<Weapon> weapons) {
+		this.weapons = weapons;
+	}
+
+	public List<Dialog> getDialog() {
+		return dialogs;
+	}
+
+	public void setDialog(List<Dialog> dialog) {
+		this.dialogs = dialog;
 	}
 
 }

@@ -21,6 +21,7 @@ public class TextAdventureBean {
 	@PostConstruct
 	public void init() {
 		
-		taDAO.listIncome();
+		taDAO.listAll();
 	}
+	
 }

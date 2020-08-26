@@ -13,58 +13,68 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Dialog")
+@Table(name = "`dialog`")
 public class Dialog {
-	
-		@Id
-		@Column(name = "idDialog")
-		private int idDialog;
 
-		@Column(name = "Text")
-		private String dialogText;
+	@Id
+	@Column(name = "Id")
+	private int Id;
 
-		@ManyToMany(mappedBy = "dialogTexts")
-		private List<Character> characters = new ArrayList<Character>();
-		
-		  @ManyToMany(cascade = { CascadeType.ALL })
-		    @JoinTable(
-		        name = "EnvironmentHasDialog", 
-		        joinColumns = { @JoinColumn(name = "idDialog") }, 
-		        inverseJoinColumns = { @JoinColumn(name = "idEnvironment") }
-		    )
-		  private List<Environment> environments = new ArrayList<Environment>();
+	@Column(name = "Text")
+	private String dialogText;
 
-		  
-		  
-		public int getIdDialog() {
-			return idDialog;
-		}
+	@ManyToMany(mappedBy = "dialogs")
+	private List<Character> characters = new ArrayList<Character>();
 
-		public void setIdDialog(int idDialog) {
-			this.idDialog = idDialog;
-		}
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(name = "environmenthasdialog", joinColumns = {
+			@JoinColumn(name = "dialog_id") }, inverseJoinColumns = {
+					@JoinColumn(name = "environment_id") })
+	private List<Environment> environments = new ArrayList<Environment>();
 
-		public String getDialogText() {
-			return dialogText;
-		}
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(name = "dialoghasOption", joinColumns = {
+			@JoinColumn(name = "dialog_id") }, inverseJoinColumns = {
+					@JoinColumn(name = "dialogoption_id") })
+	private List<DialogOption> dialogoptions = new ArrayList<DialogOption>();
 
-		public void setDialogText(String dialogText) {
-			this.dialogText = dialogText;
-		}
+	public int getId() {
+		return Id;
+	}
 
-		public List<Character> getCharacters() {
-			return characters;
-		}
+	public void setIdDialog(int i) {
+		Id = i;
+	}
 
-		public void setCharacters(List<Character> characters) {
-			this.characters = characters;
-		}
+	public String getDialogText() {
+		return dialogText;
+	}
 
-		public List<Environment> getEnvironments() {
-			return environments;
-		}
+	public void setDialogText(String dialogText) {
+		this.dialogText = dialogText;
+	}
 
-		public void setEnvironments(List<Environment> environments) {
-			this.environments = environments;
-		}
+	public List<Character> getCharacters() {
+		return characters;
+	}
+
+	public void setCharacters(List<Character> characters) {
+		this.characters = characters;
+	}
+
+	public List<Environment> getEnvironments() {
+		return environments;
+	}
+
+	public void setEnvironments(List<Environment> environments) {
+		this.environments = environments;
+	}
+
+	public List<DialogOption> getDialogoptions() {
+		return dialogoptions;
+	}
+
+	public void setDialogoptions(List<DialogOption> dialogoptions) {
+		this.dialogoptions = dialogoptions;
+	}
 }

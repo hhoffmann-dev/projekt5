@@ -13,12 +13,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Character")
+@Table(name = "weapon")
 public class Weapon {
 
 	@Id
-	@Column(name = "idWeapon")
-	private int idWeapon;
+	@Column(name = "Id")
+	private int Id;
 
 	@Column(name = "WeaponName")
 	private String weaponName;
@@ -29,12 +29,12 @@ public class Weapon {
 	@ManyToMany(mappedBy = "weapons")
 	private List<Character> characters = new ArrayList<Character>();
 
-	public int getIdWeapon() {
-		return idWeapon;
+	public int getId() {
+		return Id;
 	}
 
-	public void setIdWeapon(int idWeapon) {
-		this.idWeapon = idWeapon;
+	public void setIdWeapon(int i) {
+		Id = i;
 	}
 
 	public String getWeaponName() {

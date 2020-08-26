@@ -7,6 +7,7 @@
         <class>itech.bs14.projekt5.textadventure.Entities.Weapon</class>
         <class>itech.bs14.projekt5.textadventure.Entities.Dialog</class>
         <class>itech.bs14.projekt5.textadventure.Entities.Environment</class>
+        <class>itech.bs14.projekt5.textadventure.Entities.DialogOption</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />

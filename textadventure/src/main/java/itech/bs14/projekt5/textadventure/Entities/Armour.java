@@ -15,28 +15,28 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "Armour")
+@Table(name = "`armour`")
 public class Armour {
 
 		@Id
-		@Column(name = "idArmour")
-		private int idArmour;
+		@Column(name = "Id")
+		private int Id;
 
 		@Column(name = "Name")
 		private String name;
 		
-		@Column(name = "info")
-		private String Defence;
+		@Column(name = "Defence")
+		private int Defence;
 		
 		@ManyToMany(mappedBy = "armours")
 		private List<Character> characters = new ArrayList<Character>();
 
-		public int getIdArmour() {
-			return idArmour;
+		public int getId() {
+			return Id;
 		}
 
-		public void setIdArmour(int idArmour) {
-			this.idArmour = idArmour;
+		public void setId( int i ) {
+			Id = i;
 		}
 
 		public String getName() {
@@ -47,11 +47,11 @@ public class Armour {
 			this.name = name;
 		}
 
-		public String getDefence() {
+		public int getDefence() {
 			return Defence;
 		}
 
-		public void setDefence(String defence) {
+		public void setDefence(int defence) {
 			Defence = defence;
 		}
 
