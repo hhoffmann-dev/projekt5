@@ -26,47 +26,18 @@ public class TextAdventureDAO {
 	private EntityManager entityManager;
 	
 	@SuppressWarnings("unchecked")
-	public void listAll() {
-		Query query = entityManager.createQuery("SELECT m FROM Character m");
-		List<Character> ch = query.getResultList();
+	public Dialog loadDialog(int selectedDialogId) {
 		
-		for (Character c : ch) {
-			for (Armour a : c.getArmours()) {
-				System.out.print("Armour:");
-				System.out.println(a.getName());
-			}
+		Query query = entityManager.createQuery("SELECT m FROM Dialog m Where Id = :dialog");
+		
+		if (selectedDialogId != 0) {
+			query.setParameter("dialog", selectedDialogId);
 		}
-		
-		for (Character c : ch) {
-			for (Dialog d : c.getDialog()) {
-				System.out.print("Dialog:");
-				System.out.println(d.getDialogText());
-			}
+		else {
+			query.setParameter("dialog", 1);
 		}
-		
-		for (Character c : ch) {
-			for (Weapon w : c.getWeapons()) {
-				System.out.print("Weapon: ");
-				System.out.println(w.getWeaponName());
-			}
-		}
-		
-		Query query2 = entityManager.createQuery("SELECT m FROM Dialog m");
-		List<Dialog> ds = query2.getResultList();
-		
-		for (Dialog d : ds) {
-			for (DialogOption do1 : d.getDialogoptions() ) {
-				System.out.print("Dialogoption: ");
-				System.out.println(do1.getDialogText());
-			}
-		}
-		
-		for (Dialog d : ds) {
-			for (Environment env : d.getEnvironments() ) {
-				System.out.print("Environment: ");
-				System.out.println(env.getEnvironmentName());
-			}
-		}
-		
+
+		Dialog dialog = (Dialog) query.getResultList().get(0);
+		return dialog;
 	}
 }

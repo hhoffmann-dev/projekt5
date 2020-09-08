@@ -15,8 +15,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import itech.bs14.projekt5.textadventure.Beans.TextAdventureBean;
+import itech.bs14.projekt5.textadventure.Entities.Dialog;
+
 @Component("TextAdventureView")
 @Scope("session")
 public class TextAdventureView {
+	
+	public int selectedDialogId;
+	
+	public Dialog selectedDialog;
+	
+	@Autowired
+	TextAdventureBean bean;
+	
+	public void loadDialog(int selectedDialogId) {
+		
+		selectedDialog = bean.loadDialog(selectedDialogId);
+	}
+	
+	public void setNewDialog(int optionId) {
+		selectedDialogId  = bean.setNewDialog(optionId);
+		
+		loadDialog(selectedDialogId);
+	}
+
+	public Dialog getSelectedDialog() {
+		
+		if (selectedDialog == null)
+			loadDialog(selectedDialogId);
+		
+		
+		return selectedDialog;
+	}
 	
 }

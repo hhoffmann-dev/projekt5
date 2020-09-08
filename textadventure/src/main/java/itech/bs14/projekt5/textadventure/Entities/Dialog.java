@@ -70,7 +70,7 @@ public class Dialog {
 		this.environments = environments;
 	}
 
-	public List<DialogOption> getDialogoptions() {
+	public List<DialogOption> getDialogOptions() {
 		return dialogoptions;
 	}
 
