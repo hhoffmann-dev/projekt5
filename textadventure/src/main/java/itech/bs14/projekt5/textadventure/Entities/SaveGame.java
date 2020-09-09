@@ -15,10 +15,10 @@ public class SaveGame {
 			private int Id;
 
 			@Column(name = "dialog_id")
-			private String dialogId;
+			private int dialogId;
 			
 			@Column(name = "user_id")
-			private String userId;
+			private int userId;
 
 			public int getId() {
 				return Id;
@@ -28,19 +28,19 @@ public class SaveGame {
 				Id = id;
 			}
 
-			public String getDialogId() {
+			public int getDialogId() {
 				return dialogId;
 			}
 
-			public void setDialogId(String dialogId) {
+			public void setDialogId(int dialogId) {
 				this.dialogId = dialogId;
 			}
 
-			public String getUserId() {
+			public int getUserId() {
 				return userId;
 			}
 
-			public void setUserId(String userId) {
+			public void setUserId(int userId) {
 				this.userId = userId;
 			}
 

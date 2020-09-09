@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import itech.bs14.projekt5.textadventure.DAOs.TextAdventureDAO;
 import itech.bs14.projekt5.textadventure.Entities.Dialog;
+import itech.bs14.projekt5.textadventure.Entities.SaveGame;
 import itech.bs14.projekt5.textadventure.Entities.UserData;
 
 @Component("TextAdventureBean")
@@ -151,5 +152,15 @@ public class TextAdventureBean {
 	public UserData checkCredentials(String user, String password) {
 		UserData userAccount = taDAO.checkCredentialsWithDBEntries(user, password);
 		return userAccount;
+	}
+
+	public void writeGameprocess(Dialog selectedDialog, UserData user) {
+		taDAO.saveStage(selectedDialog, user);
+		
+	}
+
+	public SaveGame readGameProcess(UserData user) {
+		SaveGame saveState = taDAO.readState(user);
+		return saveState;
 	}
 }

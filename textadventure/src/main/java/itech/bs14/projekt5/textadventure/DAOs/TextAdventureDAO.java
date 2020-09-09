@@ -15,6 +15,7 @@ import itech.bs14.projekt5.textadventure.Entities.Character;
 import itech.bs14.projekt5.textadventure.Entities.Dialog;
 import itech.bs14.projekt5.textadventure.Entities.DialogOption;
 import itech.bs14.projekt5.textadventure.Entities.Environment;
+import itech.bs14.projekt5.textadventure.Entities.SaveGame;
 import itech.bs14.projekt5.textadventure.Entities.UserData;
 import itech.bs14.projekt5.textadventure.Entities.Weapon;
 
@@ -53,5 +54,25 @@ public class TextAdventureDAO {
 
 		return userAccount;
 
+	}
+
+	public void saveStage(Dialog selectedDialog, UserData user) {
+		SaveGame game = new SaveGame();
+		game.setDialogId(selectedDialog.getId());
+		game.setUserId(user.getId());
+		entityManager.merge(game);
+	}
+
+	public SaveGame readState(UserData user) {
+		Query query = entityManager.createQuery("SELECT m FROM SaveGame m Where userId = :userId");
+
+		query.setParameter("userId", Integer.valueOf(user.getId()));
+
+		if (query.getResultList().isEmpty())
+			return null;
+
+		SaveGame saveState = (SaveGame) query.getResultList().get(0);
+
+		return saveState;
 	}
 }

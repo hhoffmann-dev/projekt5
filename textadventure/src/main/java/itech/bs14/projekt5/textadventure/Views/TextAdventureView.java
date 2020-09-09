@@ -20,6 +20,8 @@ import itech.bs14.projekt5.textadventure.Beans.TextAdventureBean;
 import itech.bs14.projekt5.textadventure.Entities.Dialog;
 import itech.bs14.projekt5.textadventure.Entities.DialogOption;
 import itech.bs14.projekt5.textadventure.Entities.Environment;
+import itech.bs14.projekt5.textadventure.Entities.SaveGame;
+import itech.bs14.projekt5.textadventure.Entities.UserData;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -35,7 +37,7 @@ import javax.servlet.http.HttpSession;
 @Scope("session")
 public class TextAdventureView {
 	
-	public int selectedDialogId;
+	public int selectedDialogId = 1;
 
 	public Dialog selectedDialog;
 
@@ -47,6 +49,9 @@ public class TextAdventureView {
 
 	@Autowired
 	TextAdventureBean bean;
+	
+	@Autowired
+	LoginView loginView;
 
 	public void loadDialog(int selectedDialogId) {
 
@@ -89,7 +94,7 @@ public class TextAdventureView {
 	}
 	public void restartGame() {
 		
-		selectedDialogId = 0;
+		selectedDialogId = 1;
 		selectedDialog = null;
 		selectedEnvironment = null;
 		option = null;
@@ -97,9 +102,21 @@ public class TextAdventureView {
 		
 	}
 	
-//	public void save() {
-//		bean.writeGameprocess(selectedDialog)
-//	}
+	public void save() {
+		UserData user = loginView.getCurrentUser();
+		
+		bean.writeGameprocess(selectedDialog, user);
+	}
+	
+	public void loadSaving() {
+		UserData user = loginView.getCurrentUser();
+		
+		if (user == null)
+			return;
+		
+		SaveGame saveState = bean.readGameProcess(user);
+		loadDialog(saveState.getDialogId());
+	}
 
 	public List<DialogOption> getDialogOptions() {
 		return dialogOptions;

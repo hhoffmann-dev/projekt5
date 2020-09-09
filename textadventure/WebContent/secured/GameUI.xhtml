@@ -60,6 +60,8 @@ body {
 				action="#{LoginView.logout()}"/>
 				<p:commandButton id="save" value="Spielstand speichern"
 				action="#{TextAdventureView.save()}"/>
+				<p:commandButton id="loadsaving" value="Spielstand laden"
+				action="#{TextAdventureView.loadSaving()}" update=":form"/>
 		</p:outputPanel>
 	</p:panel>
 </h:form>
