@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import itech.bs14.projekt5.textadventure.DAOs.TextAdventureDAO;
 import itech.bs14.projekt5.textadventure.Entities.Dialog;
+import itech.bs14.projekt5.textadventure.Entities.UserData;
 
 @Component("TextAdventureBean")
 @Scope("singleton")
@@ -103,6 +104,9 @@ public class TextAdventureBean {
 	public int setNewDialogByDialogId(int dialogId) {
 
 		switch (dialogId) {
+		case 2:
+			dialogId = 4;
+			break;
 		case 3:
 			dialogId = 4;
 			break;
@@ -142,5 +146,10 @@ public class TextAdventureBean {
 		}
 
 		return dialogId;
+	}
+
+	public UserData checkCredentials(String user, String password) {
+		UserData userAccount = taDAO.checkCredentialsWithDBEntries(user, password);
+		return userAccount;
 	}
 }

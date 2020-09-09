@@ -1,5 +1,6 @@
 package itech.bs14.projekt5.textadventure.Views;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,23 +21,29 @@ import itech.bs14.projekt5.textadventure.Entities.Dialog;
 import itech.bs14.projekt5.textadventure.Entities.DialogOption;
 import itech.bs14.projekt5.textadventure.Entities.Environment;
 
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 @Component("TextAdventureView")
 @Scope("session")
 public class TextAdventureView {
-
+	
 	public int selectedDialogId;
 
-	public Dialog predecessorDialog;
-
 	public Dialog selectedDialog;
-	
+
 	public Environment selectedEnvironment;
 
 	public DialogOption option;
 
-	List<DialogOption> dialogOptions;
-
-	public Map<Integer, DialogOption> reducedMapOptions;
+	public List<DialogOption> dialogOptions;
 
 	@Autowired
 	TextAdventureBean bean;
@@ -44,76 +51,55 @@ public class TextAdventureView {
 	public void loadDialog(int selectedDialogId) {
 
 		selectedDialog = bean.loadDialog(selectedDialogId);
-		
+
 		// 1:1 kardinality for episode one of Laverra. For future purpose n:m
-		
+
 		List<Environment> envoLst = selectedDialog.getEnvironments();
-		
+
 		if (!envoLst.isEmpty())
 			selectedEnvironment = envoLst.get(0);
-			
 
 		dialogOptions = selectedDialog.getDialogOptions();
 
-		if (!selectedDialog.getDialogOptions().isEmpty())
-			predecessorDialog = selectedDialog;
 	}
 
 	public void setNewDialog(int optionId, DialogOption opt) {
 
 		option = opt;
-		
+
 		selectedDialogId = bean.setNewDialogByOptionId(optionId);
 
 		loadDialog(selectedDialogId);
 	}
-
-	private void reducePossibleOption(DialogOption option) {
-		
-		reducedMapOptions = new HashMap<Integer, DialogOption>();
-		
-		for ( DialogOption opt : predecessorDialog.getDialogOptions()) {
-			reducedMapOptions.put(Integer.valueOf(opt.getId()), opt);
-		}
-		
-		reducedMapOptions.remove(Integer.valueOf(option.getId()), option);
-		dialogOptions = new ArrayList<DialogOption>(reducedMapOptions.values());
-	}
-
-
-	public void continueDialog() {
-		
-		if (selectedDialog.getId()==1)
-			return;
-		
-		// For possibility an option are not heading to new dialog
-		if (option.isDeadEnd()) {
-			selectedDialog = predecessorDialog;
-			reducePossibleOption(option);
-		}
-		
-		// For Possibility a dialog doesn't have options to continue
-		if (reducedMapOptions == null ) {
-			int followDialogId = bean.setNewDialogByDialogId(selectedDialog.getId());
-			loadDialog(followDialogId);
-			return;
-		}
-		
-		if (reducedMapOptions.isEmpty()) {
-			int followDialogId = bean.setNewDialogByDialogId(selectedDialog.getId());
-			loadDialog(followDialogId);
-		}
-		
-		reducedMapOptions.clear();
-	}
 	
+	public void continueDialog() {
+
+		if (selectedDialog.getDialogOptions().isEmpty()) {
+			int nextDialogId = bean.setNewDialogByDialogId(selectedDialog.getId());
+			loadDialog(nextDialogId);
+		}
+	}
+
 	public Dialog getSelectedDialog() {
-		
+
 		if (selectedDialog == null)
 			loadDialog(selectedDialogId);
-		
+
 		return selectedDialog;
 	}
+	public void restartGame() {
+		
+		selectedDialogId = 0;
+		selectedDialog = null;
+		selectedEnvironment = null;
+		option = null;
+		dialogOptions = null;
+		
+	}
+	
+//	public void save() {
+//		bean.writeGameprocess(selectedDialog)
+//	}
 
 	public List<DialogOption> getDialogOptions() {
 		return dialogOptions;
@@ -121,17 +107,5 @@ public class TextAdventureView {
 
 	public Environment getselectedEnvironment() {
 		return selectedEnvironment;
-	}
-	
-	public void restartGame () {
-		
-		selectedDialogId = 0;
-		predecessorDialog = null;
-		selectedDialog = null;
-		selectedEnvironment = null;
-		option = null;
-		dialogOptions = null;
-		reducedMapOptions = null;
-		
 	}
 }

@@ -9,7 +9,7 @@
 	<!-- <h:outputStylesheet name="css/index.css" /> -->
 	<style type="text/css">
 body {
-	background-image: url('resources/images/fantasy/fantasystart.jpg');
+	background-image: url('../resources/images/fantasy/fantasystart.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
 }
@@ -56,6 +56,10 @@ body {
 				<p:outputPanel>
 			<p:commandButton value="neustart"
 				action="#{TextAdventureView.restartGame()}" update=":form" />
+				<p:commandButton id="logout" value="logout"
+				action="#{LoginView.logout()}"/>
+				<p:commandButton id="save" value="Spielstand speichern"
+				action="#{TextAdventureView.save()}"/>
 		</p:outputPanel>
 	</p:panel>
 </h:form>
