@@ -17,7 +17,7 @@ public class DialogOption {
 			@Column(name = "Id")
 			private int Id;
 
-			@Column(name = "Text")
+			@Column(name = "DialogOptionText")
 			private String dialogText;
 
 			@ManyToMany(mappedBy = "dialogoptions")
@@ -46,6 +46,12 @@ public class DialogOption {
 			public void setDialog(List<Dialog> dialog) {
 				this.dialogs = dialog;
 			}
-			
 
+			public boolean isDeadEnd() {
+
+				if ( Id == 6 || Id == 20)
+				return true;
+					
+				return false;
+			}
 }

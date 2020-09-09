@@ -39,75 +39,25 @@ body {
 	</div>
 
 	<p:panel header="#{TextAdventureView.selectedDialog.getDialogText()}"
-		footer="Environment 1" style="margin-top:300px"
+		footer="#{TextAdventureView.selectedEnvironment.getEnvironmentName()}" style="margin-top:300px"
 		styleClass="background">
 		<p:dataTable var="option"
-			value="#{TextAdventureView.selectedDialog.getDialogOptions()}">
+			value="#{TextAdventureView.getDialogOptions()}">
 			<p:column>
 				<p:commandButton value="#{option.getDialogText()}"
-					action="#{TextAdventureView.setNewDialog(option.getId())}" update=":form" />
-					
+					action="#{TextAdventureView.setNewDialog(option.getId(), option)}"
+					update=":form" />
 			</p:column>
 		</p:dataTable>
+		<p:outputPanel>
+			<p:commandButton value="weiter"
+				action="#{TextAdventureView.continueDialog()}" update=":form" />
+		</p:outputPanel>
+				<p:outputPanel>
+			<p:commandButton value="neustart"
+				action="#{TextAdventureView.restartGame()}" update=":form" />
+		</p:outputPanel>
 	</p:panel>
-
-	<p:panel style="margin-top:120px" styleClass="background">
-		<p:panelGrid columns="3" layout="grid"
-			styleClass="showcase-text-align-center">
-			<p:ribbon>
-				<p:tab title="Inventory">
-					<p:ribbonGroup label="Swords">
-						<p:commandButton value="New" icon="ui-ribbonicon-new"
-							styleClass="ui-ribbon-bigbutton" type="button" />
-						<p:commandButton value="Save" icon="ui-ribbonicon-save"
-							styleClass="ui-ribbon-bigbutton" type="button" />
-					</p:ribbonGroup>
-					<p:ribbonGroup label="Bows">
-						<p:commandButton value="New" icon="ui-ribbonicon-new"
-							styleClass="ui-ribbon-bigbutton" type="button" />
-						<p:commandButton value="Save" icon="ui-ribbonicon-save"
-							styleClass="ui-ribbon-bigbutton" type="button" />
-					</p:ribbonGroup>
-					<p:ribbonGroup label="Armours">
-						<p:commandButton value="New" icon="ui-ribbonicon-new"
-							styleClass="ui-ribbon-bigbutton" type="button" />
-						<p:commandButton value="Save" icon="ui-ribbonicon-save"
-							styleClass="ui-ribbon-bigbutton" type="button" />
-					</p:ribbonGroup>
-				</p:tab>
-				<p:tab title="Wearing">
-					<p:ribbonGroup label="Weapon">
-						<p:commandButton value="New" icon="ui-ribbonicon-new"
-							styleClass="ui-ribbon-bigbutton" type="button" />
-						<p:commandButton value="Save" icon="ui-ribbonicon-save"
-							styleClass="ui-ribbon-bigbutton" type="button" />
-					</p:ribbonGroup>
-					<p:ribbonGroup label="Armour">
-						<p:commandButton value="New" icon="ui-ribbonicon-new"
-							styleClass="ui-ribbon-bigbutton" type="button" />
-						<p:commandButton value="Save" icon="ui-ribbonicon-save"
-							styleClass="ui-ribbon-bigbutton" type="button" />
-					</p:ribbonGroup>
-				</p:tab>
-			</p:ribbon>
-			<h:outputText value="Live Points: 300" style="color: white" />
-			<h:outputText value="Stamina: 300" style="color: white" />
-			<p:spacer></p:spacer>
-			<h:outputText value="Total Time 09:42 Minutes" style="color: white" />
-			<h:outputText value="Time left for decision: 23 Seconds"
-				style="color: white" />
-		</p:panelGrid>
-	</p:panel>
-	<p:growl id="messages" showDetail="true" />
-
-	<p:contextMenu>
-		<p:menuitem value="outfit" action="#{menuView.save}" update="messages"
-			icon="pi pi-save" />
-		<p:menuitem value="unoutfit" action="#{menuView.update}"
-			update="messages" icon="pi pi-refresh" />
-		<p:menuitem value="Delete" action="#{menuView.delete}" ajax="false"
-			icon="pi pi-times" />
-	</p:contextMenu>
 </h:form>
 </html>
 
