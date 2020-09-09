@@ -155,12 +155,16 @@ public class TextAdventureBean {
 	}
 
 	public void writeGameprocess(Dialog selectedDialog, UserData user) {
-		taDAO.saveStage(selectedDialog, user);
+		taDAO.createSaveStage(selectedDialog, user);
 		
 	}
 
 	public SaveGame readGameProcess(UserData user) {
 		SaveGame saveState = taDAO.readState(user);
 		return saveState;
+	}
+
+	public void createUser(String userName, String userPassword) {
+		taDAO.createUser(userName, userPassword);
 	}
 }

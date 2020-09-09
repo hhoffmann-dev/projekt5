@@ -1,8 +1,11 @@
 package itech.bs14.projekt5.textadventure.Entities;
 
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,6 +15,7 @@ public class SaveGame {
 	
 			@Id
 			@Column(name = "Id")
+			@GeneratedValue
 			private int Id;
 
 			@Column(name = "dialog_id")
@@ -19,7 +23,7 @@ public class SaveGame {
 			
 			@Column(name = "user_id")
 			private int userId;
-
+			
 			public int getId() {
 				return Id;
 			}

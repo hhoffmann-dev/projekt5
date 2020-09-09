@@ -20,8 +20,8 @@ public class LoginView {
 
 	public static final String HOME_PAGE_REDIRECT = "/Login.xhtml?faces-redirect=true";
 
-	public static final String LOGOUT_PAGE_REDIRECT = "/Logout.xhtml?faces-redirect=true";
-
+	public static final String SIGNUP_PAGE_REDIRECT= "/SignUp.xhtml?faces-redirect=true";
+	
 	public String userName;
 	public String userPassword;
 
@@ -41,7 +41,7 @@ public class LoginView {
 			return null;
 		}
 	}
-
+	
 	public String logout() {
 		// invalidate the session
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
@@ -49,6 +49,14 @@ public class LoginView {
 		currentUser = null;
 		
 		return HOME_PAGE_REDIRECT;
+	}
+	
+	public void createUser() {
+		
+		bean.createUser(userName, userPassword);
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Benutzer erstellt", "Benutzer erfolgreich erstellt"));
+		
 	}
 
 	public boolean isLoggedIn() {

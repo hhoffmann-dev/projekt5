@@ -2,6 +2,7 @@ package itech.bs14.projekt5.textadventure.Entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,6 +12,7 @@ public class UserData {
 	
 			@Id
 			@Column(name = "Id")
+			@GeneratedValue
 			private int Id;
 
 			@Column(name = "Password")
