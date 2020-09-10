@@ -126,4 +126,15 @@ public class TextAdventureDAO {
 		createSaveStage(null , user);
 		
 	}
+
+	public boolean checkifNameExists(String userName) {
+		Query query = entityManager.createQuery("SELECT m FROM UserData m Where name = :name");
+
+		query.setParameter("name", userName);
+		
+		if (query.getResultList().isEmpty())
+			return false;
+		
+		return true;
+	}
 }

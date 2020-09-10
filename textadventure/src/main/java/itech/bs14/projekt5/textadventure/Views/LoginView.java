@@ -57,6 +57,15 @@ public class LoginView   {
 	
 	public void createUser() {
 		
+		boolean nameExists = bean.checkIfNameExists(userName);
+		
+		if (nameExists) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, "Benutzername bereits vergeben!",
+							"Benutzername bereits vergeben! Bitte wählen Sie einen anderen Namen!"));
+			return;
+		}
+			
 		bean.createUser(userName, userPassword);
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Benutzer erstellt", "Benutzer erfolgreich erstellt"));

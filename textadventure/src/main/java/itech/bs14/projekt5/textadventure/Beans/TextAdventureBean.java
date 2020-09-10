@@ -167,4 +167,9 @@ public class TextAdventureBean {
 	public void createUser(String userName, String userPassword) {
 		taDAO.createUser(userName, userPassword);
 	}
+
+	public boolean checkIfNameExists(String userName) {
+		return taDAO.checkifNameExists(userName);
+		
+	}
 }
