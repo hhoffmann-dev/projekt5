@@ -1,8 +1,14 @@
 package itech.bs14.projekt5.textadventure.Views;
 
+import java.io.Serializable;
+
+import javax.annotation.PreDestroy;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -12,7 +18,7 @@ import itech.bs14.projekt5.textadventure.Entities.UserData;
 
 @Component("LoginView")
 @Scope("session")
-public class LoginView {
+public class LoginView   {
 	
 	@Autowired TextAdventureBean bean;
 
@@ -20,8 +26,6 @@ public class LoginView {
 
 	public static final String HOME_PAGE_REDIRECT = "/Login.xhtml?faces-redirect=true";
 
-	public static final String SIGNUP_PAGE_REDIRECT= "/SignUp.xhtml?faces-redirect=true";
-	
 	public String userName;
 	public String userPassword;
 
@@ -53,14 +57,30 @@ public class LoginView {
 	
 	public void createUser() {
 		
+		boolean nameExists = bean.checkIfNameExists(userName);
+		
+		if (nameExists) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, "Benutzername bereits vergeben!",
+							"Benutzername bereits vergeben! Bitte wählen Sie einen anderen Namen!"));
+			return;
+		}
+			
 		bean.createUser(userName, userPassword);
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Benutzer erstellt", "Benutzer erfolgreich erstellt"));
 		
 	}
-
+	
 	public boolean isLoggedIn() {
 		return currentUser != null;
+	}
+	
+	public String checkIfLoggedIn() {
+		if (isLoggedIn())
+			return GAME_PAGE_REDIRECT;
+				
+		return null;
 	}
 
 	public UserData getCurrentUser() {

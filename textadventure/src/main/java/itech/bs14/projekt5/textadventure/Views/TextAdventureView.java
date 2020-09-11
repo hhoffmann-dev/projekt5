@@ -36,7 +36,7 @@ import javax.servlet.http.HttpSession;
 @Component("TextAdventureView")
 @Scope("session")
 public class TextAdventureView {
-	
+
 	public int selectedDialogId = 1;
 
 	public Dialog selectedDialog;
@@ -49,7 +49,7 @@ public class TextAdventureView {
 
 	@Autowired
 	TextAdventureBean bean;
-	
+
 	@Autowired
 	LoginView loginView;
 
@@ -57,9 +57,15 @@ public class TextAdventureView {
 
 		selectedDialog = bean.loadDialog(selectedDialogId);
 
+		List<Environment> envoLst = null;
 		// 1:1 kardinality for episode one of Laverra. For future purpose n:m
 
-		List<Environment> envoLst = selectedDialog.getEnvironments();
+		try {
+			envoLst = selectedDialog.getEnvironments();
+		} catch (NullPointerException ex) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Kein Dialog vorhanden", "Bitt kontaktieren Sie den Administrator"));
+		}
 
 		if (!envoLst.isEmpty())
 			selectedEnvironment = envoLst.get(0);
@@ -76,7 +82,7 @@ public class TextAdventureView {
 
 		loadDialog(selectedDialogId);
 	}
-	
+
 	public void continueDialog() {
 
 		if (selectedDialog.getDialogOptions().isEmpty()) {
@@ -85,37 +91,38 @@ public class TextAdventureView {
 		}
 	}
 
+	public void restartGame() {
+
+		selectedDialogId = 1;
+		selectedDialog = null;
+		selectedEnvironment = null;
+		option = null;
+		dialogOptions = null;
+
+	}
+
+	public void save() {
+		UserData user = loginView.getCurrentUser();
+
+		bean.writeGameprocess(selectedDialog, user);
+	}
+
+	public void loadSaving() {
+		UserData user = loginView.getCurrentUser();
+
+		if (user == null)
+			return;
+
+		SaveGame saveState = bean.readGameProcess(user);
+		loadDialog(saveState.getDialogId());
+	}
+
 	public Dialog getSelectedDialog() {
 
 		if (selectedDialog == null)
 			loadDialog(selectedDialogId);
 
 		return selectedDialog;
-	}
-	public void restartGame() {
-		
-		selectedDialogId = 1;
-		selectedDialog = null;
-		selectedEnvironment = null;
-		option = null;
-		dialogOptions = null;
-		
-	}
-	
-	public void save() {
-		UserData user = loginView.getCurrentUser();
-		
-		bean.writeGameprocess(selectedDialog, user);
-	}
-	
-	public void loadSaving() {
-		UserData user = loginView.getCurrentUser();
-		
-		if (user == null)
-			return;
-		
-		SaveGame saveState = bean.readGameProcess(user);
-		loadDialog(saveState.getDialogId());
 	}
 
 	public List<DialogOption> getDialogOptions() {
