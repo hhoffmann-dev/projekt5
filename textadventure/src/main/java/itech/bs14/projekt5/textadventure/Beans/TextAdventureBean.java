@@ -32,7 +32,7 @@ public class TextAdventureBean {
 
 	public int setNewDialogByOptionId(int optionId) {
 		int dialogId = 0;
-		
+		// Dialog sequences and options and their relations to each other
 		switch (optionId) {
 		case 1:
 			dialogId = 8;
@@ -103,7 +103,8 @@ public class TextAdventureBean {
 	}
 
 	public int setNewDialogByDialogId(int dialogId) {
-
+		//Some Dialogs don't have options. So a dialog sequence without options is required
+		
 		switch (dialogId) {
 		case 2:
 			dialogId = 4;

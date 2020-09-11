@@ -22,7 +22,9 @@ public class Dialog {
 
 	@Column(name = "Text")
 	private String dialogText;
-
+	
+	
+	// n:m relations from Database Model
 	@ManyToMany(mappedBy = "dialogs")
 	private List<Character> characters = new ArrayList<Character>();
 

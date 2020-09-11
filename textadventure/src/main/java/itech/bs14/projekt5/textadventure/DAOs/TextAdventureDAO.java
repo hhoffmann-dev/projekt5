@@ -31,16 +31,18 @@ public class TextAdventureDAO {
 
 	@SuppressWarnings("unchecked")
 	public Dialog loadDialog(int selectedDialogId) {
+		
+		Dialog dialog = null;
 
 		Query query = entityManager.createQuery("SELECT m FROM Dialog m Where Id = :dialog");
 
-		if (selectedDialogId != 0) {
 			query.setParameter("dialog", selectedDialogId);
-		} else {
-			query.setParameter("dialog", 1);
-		}
-
-		Dialog dialog = (Dialog) query.getResultList().get(0);
+			
+			try {
+				dialog = (Dialog) query.getResultList().get(0);
+			}catch(NullPointerException ex) {
+				return null;
+			}
 		return dialog;
 	}
 
