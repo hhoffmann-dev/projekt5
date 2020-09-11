@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<!-- <h:outputStylesheet name="css/index.css" /> -->
+	<style type="text/css">
+body {
+	background-image: url('resources/images/fantasy/fantasystart.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.ui-panelgrid.showcase-text-align-center .ui-grid-responsive .ui-panelgrid-cell
+	{
+	text-align: center;
+	background-color: purple;
+}
+
+.ui-panel.background {
+	background-color: purple;
+}
+
+.center {
+	text-align: center;
+	color: #fff;
+	font-size: 1.2em;
+	font-family: arial;
+	font-wight: bold;
+}
+</style>
+</h:head>
+<h:body>
+    <h:form>
+        <p:remoteCommand name="onload" action="#{LoginView.checkIfLoggedIn()}" autoRun="true" />
+    </h:form>
+</h:body>
+<p:growl id="growl" life="10000" />
+<p:panel id="login-pnl" style="width:400px;margin: 10px auto;">
+	<f:facet name="header">
+		<h:outputText value="Login" />
+	</f:facet>
+	<h:form id="login-form">
+		<p:panelGrid style="width:100%" styleClass="ui-noborder">
+			<p:row>
+				<p:column>
+					<h:outputText for="userName" value="Username:"
+						style="font-weight:bold;" />
+				</p:column>
+				<p:column>
+					<p:inputText id="userName" required="true"
+						value="#{LoginView.userName}" style="width:96%;" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<h:outputText for="userPassword" value="Passwort:"
+						style="font-weight:bold;" />
+				</p:column>
+				<p:column>
+					<p:inputText id="userPassword" type="password" required="true"
+						value="#{LoginView.userPassword}" style="width:96%;" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+		<br />
+		<p:commandButton id="btn-login" value="login"
+			update="@form, :growl, :login-form" action="#{LoginView.login()}"
+			style="width:96%;" />
+	<br />
+	<p:commandButton id="signup" value="Sign Up"
+	update="@form, :growl, :login-form"
+		action="#{LoginView.createUser()}" style="width:96%;" />
+	</h:form>
+</p:panel>
+<p:blockUI block="login-pnl" trigger=":login-form:btn-login" />
+</html>
+
