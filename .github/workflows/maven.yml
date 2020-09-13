@@ -6,8 +6,8 @@ name: Java CI with Maven
 on:
   push:
     branches: [ test-build ]
-  pull_request:
-    branches: [ test-build ]
+    tags:
+      - 'v*'
 
 jobs:
   run_tests:
@@ -35,14 +35,15 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Create release
-      id: Laveera
+    - name: Create pre-release
+      id: Laveera_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ github.ref }}
         release_name: Release ${{ github.ref }}
-        body_path: README.md
+        body: |
+          - Latest test build
         draft: false
-        prerelease: false
+        prerelease: true
