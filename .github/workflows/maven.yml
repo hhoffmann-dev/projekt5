@@ -5,14 +5,14 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ test-build ]
-  pull_request:
-    branches: [ test-build ]
+    branches:
+      - test-build
+    tags:
+      - 'v*'
 
 jobs:
   run_tests:
     runs-on: ubuntu-latest
-    
     steps:
     - name: Check out the respository
       uses: actions/checkout@v2
@@ -30,3 +30,20 @@ jobs:
 
     - name: Test with Maven
       run: mvn -B test --file ./*/pom.xml
+  
+  release:
+    needs: [run_tests]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Create pre-release
+      id: Laveera_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v1.0.0
+        release_name: Release v1.0.0
+        body: |
+          - Latest test build
+        draft: false
+        prerelease: true
